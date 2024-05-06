@@ -81,7 +81,7 @@ H = model.fit(
 	aug.flow(trainX, trainY, batch_size=BS),
 	validation_data=(testX, testY),
 	steps_per_epoch=len(trainX) // BS,
-	epochs=EPOCHS,
+	epochs=5,
 	class_weight=classWeight,
 	verbose=1)
 
@@ -97,7 +97,7 @@ print(classification_report(testY.argmax(axis=1),predictions.argmax(axis=1), tar
 
 # save the model to disk
 print("[INFO] serializing network...")
-model.save(args["model"], save_format="h5")
+model.save(args["model"])
 
 # plot and save training history
 N = np.arange(0, EPOCHS)
@@ -130,8 +130,7 @@ for i in np.random.choice(np.arange(0, len(testY)), size=(49,)):
 	# resize image to 96x96
 	image = cv2.merge([image] * 3)
 	image = cv2.resize(image, (96, 96), interpolation=cv2.INTER_LINEAR)
-	cv2.putText(image, label, (5, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.75,
-		color, 2)
+	cv2.putText(image, label, (5, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.75,color, 2)
 	images.append(image)
 
 montage = build_montages(images, (96, 96), (7, 7))[0]
